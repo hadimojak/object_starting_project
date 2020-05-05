@@ -30,10 +30,11 @@ const addMovieHandler = () => {
   renderMovie();
 };
 
-// const renderMovie = (title,extraName,extraValue,id) => { // this is with list items
+// const renderMovie = (title, extraName, extraValue, id) => {
+//   // this is with list items
 //   const movieList = document.getElementById("movie-list"); //unordered list
 //   const li = document.createElement("li");
-//   li.innerHTML=`<div> <pre>${title}   ${extraName}  ${extraValue}    with  id : ${id}</pre></div>`
+//   li.innerHTML = `<div> <pre>${title}   ${extraValue}  ${extraName}    with  id : ${id}</pre></div>`;
 //   movieList.append(li);
 //   movieList.classList.add("visible");
 // };
@@ -48,7 +49,13 @@ const renderMovie = () => {
   movieList.innerHTML = "";
   movies.forEach((movie) => {
     const movieEl = document.createElement("li");
-    movieEl.textContent = movie.info.title;
+    let text = movie.info.title + "_";
+    for (const key in movie.info) {
+      if (key !== "title") {
+        text = text + `${key}:${movie.info[key]} `;
+      }
+    }
+    movieEl.textContent = text;
     movieList.append(movieEl);
   });
 };
