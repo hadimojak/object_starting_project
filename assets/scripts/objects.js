@@ -12,7 +12,7 @@ const addMovieHandler = () => {
     extraName.trim() === "" ||
     extraValue.trim() === ""
   ) {
-    console.log("bad input");
+    // console.log("bad input");
     return;
   }
 
@@ -22,10 +22,14 @@ const addMovieHandler = () => {
       [extraName]: extraValue,
     },
     id: Math.random(),
+    getFormatedTitle() {
+      console.log(this);
+      return this.info.title.toUpperCase();
+    },
   };
   movies.push(newMovie);
-  console.log(movies);
-  console.log("here");
+  // console.log(movies);
+  // console.log("here");
   // renderMovie(newMovie.info.title, extraValue, extraName, newMovie.id); //render movie with LIST ITEMS
   renderMovie();
 };
@@ -38,7 +42,7 @@ const addMovieHandler = () => {
 //   movieList.append(li);
 //   movieList.classList.add("visible");
 // };
-const renderMovie = () => {
+const renderMovie = (filter = "") => {
   const movieList = document.getElementById("movie-list"); //unordered list
   if (movies.length !== 0) {
     movieList.classList.add("visible");
@@ -47,12 +51,26 @@ const renderMovie = () => {
     return;
   }
   movieList.innerHTML = "";
-  movies.forEach((movie) => {
+
+  const filteredMovie = !filter
+    ? movies
+    : movies.filter((movie) => movie.info.title.includes(filter)); //search process
+
+  filteredMovie.forEach((movie) => {
     const movieEl = document.createElement("li");
-    let text = movie.info.title + "_";
-    for (const key in movie.info) {
+    // if ("info" in movie) {
+    //   console.log("info is property on object movie");
+    // }
+
+    const { info, ...otherprops } = movie;
+    // console.log(otherprops, "--------------");
+    // const { title: movieTitle } = info;
+    let { getFormatedTitle } = movie;
+    // getFormatedTitle = getFormatedTitle.bind(movie);
+    let text = getFormatedTitle.call(movie) + "_";
+    for (const key in info) {
       if (key !== "title") {
-        text = text + `${key}:${movie.info[key]} `;
+        text = text + `${key}:${info[key]} `;
       }
     }
     movieEl.textContent = text;
@@ -60,4 +78,12 @@ const renderMovie = () => {
   });
 };
 
+const searchMovieHandler = () => {
+  // const searchMovieHandler = function () {
+  console.log(this);
+  const filterTitle = document.getElementById("filter-title").value;
+  renderMovie(filterTitle);
+};
+
 addMovieButton.addEventListener("click", addMovieHandler);
+searchMovieButton.addEventListener("click", searchMovieHandler);
