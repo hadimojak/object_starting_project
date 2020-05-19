@@ -1,51 +1,18 @@
-'use strict';
-const addMovieBtn = document.getElementById('add-movie-btn');
-const searchBtn = document.getElementById('search-btn');
-
+const addMovieButton = document.getElementById("add-movie-btn"); //button
+const searchMovieButton = document.getElementById("search-btn");
+//  ---------------------------------------------
 const movies = [];
 
-const renderMovies = (filter = '') => {
-  const movieList = document.getElementById('movie-list');
-
-  if (movies.length === 0) {
-    movieList.classList.remove('visible');
-    return;
-  } else {
-    movieList.classList.add('visible');
-  }
-  movieList.innerHTML = '';
-
-  const filteredMovies = !filter
-    ? movies
-    : movies.filter(movie => movie.info.title.includes(filter));
-
-  filteredMovies.forEach(movie => {
-    const movieEl = document.createElement('li');
-    const { info, ...otherProps } = movie;
-    console.log(otherProps);
-    // const { title: movieTitle } = info;
-    let { getFormattedTitle } = movie;
-    // getFormattedTitle = getFormattedTitle.bind(movie);
-    let text = getFormattedTitle.apply(movie) + ' - ';
-    for (const key in info) {
-      if (key !== 'title' && key !== '_title') {
-        text = text + `${key}: ${info[key]}`;
-      }
-    }
-    movieEl.textContent = text;
-    movieList.append(movieEl);
-  });
-};
-
 const addMovieHandler = () => {
-  const title = document.getElementById('title').value;
-  const extraName = document.getElementById('extra-name').value;
-  const extraValue = document.getElementById('extra-value').value;
-
+  const movieTitle = document.getElementById("title").value;
+  const extraName = document.getElementById("extra-name").value;
+  const extraValue = document.getElementById("extra-value").value;
   if (
-    extraName.trim() === '' ||
-    extraValue.trim() === ''
+    movieTitle.trim() === "" ||
+    extraName.trim() === "" ||
+    extraValue.trim() === ""
   ) {
+    // console.log("bad input");
     return;
   }
 
@@ -66,7 +33,7 @@ const addMovieHandler = () => {
     getFormatedTitle() {
       console.log(this, "---------------");
       return this.info.title.toUpperCase();
-    }
+    },
   };
   movies.push(newMovie);
   // console.log(movies);
@@ -100,8 +67,11 @@ const renderMovie = (filter = "") => {
     ? movies
     : movies.filter((movie) => movie.info.title.includes(filter)); //search process
 
-  newMovie.info.title = title;
-  console.log(newMovie.info.title);
+  filteredMovie.forEach((movie) => {
+    const movieEl = document.createElement("li");
+    // if ("info" in movie) {
+    //   console.log("info is property on object movie");
+    // }
 
     const { info, ...otherprops } = movie;
     // console.log(otherprops, "--------------");
@@ -110,7 +80,7 @@ const renderMovie = (filter = "") => {
     // getFormatedTitle = getFormatedTitle.bind(movie);
     let text = getFormatedTitle.call(movie) + "_";
     for (const key in info) {
-      if (key !== "title" && key !== "_title") {
+      if (key !== "title" && key !== '_title') {
         text = text + `${key}:${info[key]} `;
       }
     }
@@ -126,5 +96,5 @@ const searchMovieHandler = () => {
   renderMovie(filterTitle);
 };
 
-addMovieBtn.addEventListener('click', addMovieHandler);
-searchBtn.addEventListener('click', searchMovieHandler);
+addMovieButton.addEventListener("click", addMovieHandler);
+searchMovieButton.addEventListener("click", searchMovieHandler);
