@@ -52,7 +52,6 @@ const addMovieHandler = () => {
   const newMovie = {
     info: {
       set title(val) {
-<<<<<<< HEAD
         if (val.trim() == "") {
           this._title = "defult";
           return;
@@ -66,26 +65,9 @@ const addMovieHandler = () => {
     id: Math.random(),
     getFormatedTitle() {
       console.log(this, "---------------");
-=======
-        if (val.trim() === '') {
-          this._title = 'DEFAULT';
-          return;
-        }
-        this._title = val;
-      },
-      get title() {
-        return this._title;
-      },
-      [extraName]: extraValue
-    },
-    id: Math.random().toString(),
-    getFormattedTitle() {
-      console.log(this);
->>>>>>> 4cbef6b36a0bf6d031d6105d7f15146bfb8550bb
       return this.info.title.toUpperCase();
     }
   };
-<<<<<<< HEAD
   movies.push(newMovie);
   // console.log(movies);
   // console.log("here");
@@ -117,13 +99,10 @@ const renderMovie = (filter = "") => {
   const filteredMovie = !filter
     ? movies
     : movies.filter((movie) => movie.info.title.includes(filter)); //search process
-=======
->>>>>>> 4cbef6b36a0bf6d031d6105d7f15146bfb8550bb
 
   newMovie.info.title = title;
   console.log(newMovie.info.title);
 
-<<<<<<< HEAD
     const { info, ...otherprops } = movie;
     // console.log(otherprops, "--------------");
     // const { title: movieTitle } = info;
@@ -145,16 +124,6 @@ const searchMovieHandler = () => {
   // console.log(this);
   const filterTitle = document.getElementById("filter-title").value;
   renderMovie(filterTitle);
-=======
-  movies.push(newMovie);
-  renderMovies();
-};
-
-const searchMovieHandler = () => {
-  console.log(this);
-  const filterTerm = document.getElementById('filter-title').value;
-  renderMovies(filterTerm);
->>>>>>> 4cbef6b36a0bf6d031d6105d7f15146bfb8550bb
 };
 
 addMovieBtn.addEventListener('click', addMovieHandler);
